@@ -15,7 +15,7 @@ export async function generateMetadata(
   const id = resolvedParams.id;
   
   const { data: product } = await supabaseAdmin
-    .from('shop_products')
+    .from('products')
     .select('*')
     .eq('id', id)
     .single();
@@ -61,7 +61,7 @@ export default async function StoreProductLayout({ params, children }: Props) {
   const id = resolvedParams.id;
   
   const { data: product } = await supabaseAdmin
-    .from('shop_products')
+    .from('products')
     .select('*')
     .eq('id', id)
     .single();

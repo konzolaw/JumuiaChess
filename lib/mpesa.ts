@@ -33,7 +33,7 @@ export const formatPhoneNumber = (phone: string): string => {
 };
 
 // 1. Fetch OAuth Access Token
-export const getMpesaToken = async (): Promise<string> => {
+export const getMpesaToken = async (retries = 3, backoff = 1000): Promise<string> => {
   if (MPESA_CONSUMER_KEY === 'mock_consumer_key' || !MPESA_CONSUMER_KEY) {
     console.log('Using mock M-Pesa token due to default/missing keys.');
     return 'mock_access_token';
@@ -42,18 +42,25 @@ export const getMpesaToken = async (): Promise<string> => {
   const url = `${getBaseUrl()}/oauth/v1/generate?grant_type=client_credentials`;
   const auth = Buffer.from(`${MPESA_CONSUMER_KEY}:${MPESA_CONSUMER_SECRET}`).toString('base64');
 
-  try {
-    const response = await axios.get(url, {
-      headers: {
-        Authorization: `Basic ${auth}`,
-      },
-      timeout: 10000, // 10 second timeout
-    });
-    return response.data.access_token;
-  } catch (error: any) {
-    console.error('Error fetching M-Pesa OAuth token:', error.response?.data || error.message);
-    throw new Error('Failed to generate M-Pesa access token. Safaricom API might be down or credentials invalid.');
+  for (let attempt = 1; attempt <= retries; attempt++) {
+    try {
+      const response = await axios.get(url, {
+        headers: {
+          Authorization: `Basic ${auth}`,
+        },
+        timeout: 10000, // 10 second timeout
+      });
+      return response.data.access_token;
+    } catch (error: any) {
+      if (attempt === retries) {
+        throw new Error('MPESA_TOKEN_GENERATION_FAILED');
+      }
+      await new Promise((resolve) => setTimeout(resolve, backoff));
+      backoff *= 2;
+    }
   }
+
+  throw new Error('MPESA_TOKEN_GENERATION_FAILED');
 };
 
 // 2. Initiate STK Push
@@ -116,7 +123,6 @@ export const initiateStkPush = async (
       customerMessage: response.data.CustomerMessage,
     };
   } catch (error: any) {
-    console.error('Error initiating M-Pesa STK push:', error.response?.data || error.message);
     throw new Error(error.response?.data?.errorMessage || 'Failed to initiate STK push via M-Pesa. Safaricom API might be unreachable.');
   }
 };

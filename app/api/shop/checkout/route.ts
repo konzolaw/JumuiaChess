@@ -55,7 +55,7 @@ export async function POST(request: NextRequest) {
 
       return NextResponse.json({
         success: false,
-        error: stkError.message || 'Failed to trigger payment STK Push. Order marked as failed.',
+        error: 'We are currently unable to process your payment. Please try again later.',
       }, { status: 400 });
     }
   } catch (err: any) {

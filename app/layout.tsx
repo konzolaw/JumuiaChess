@@ -62,6 +62,7 @@ export const metadata: Metadata = {
 
 import { SettingsProvider } from "@/components/providers/SettingsProvider";
 import NextTopLoader from 'nextjs-toploader';
+import { CookieNotice } from '@/components/layout/CookieNotice';
 
 export default function RootLayout({
   children,
@@ -74,6 +75,7 @@ export default function RootLayout({
         <SettingsProvider>
           <NextTopLoader color="#6B4A34" showSpinner={false} />
           {children}
+          <CookieNotice />
         </SettingsProvider>
       </body>
     </html>

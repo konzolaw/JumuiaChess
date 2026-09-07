@@ -7,7 +7,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   // Fetch dynamic routes
   const [tournamentsRes, productsRes] = await Promise.all([
     supabaseAdmin.from('tournaments').select('id, created_at'),
-    supabaseAdmin.from('shop_products').select('id, created_at').eq('in_stock', true),
+    supabaseAdmin.from('products').select('id, created_at').eq('in_stock', true),
   ]);
 
   const tournaments = tournamentsRes.data || [];
