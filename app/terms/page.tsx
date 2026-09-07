@@ -26,11 +26,11 @@ export default function TermsPage() {
             <h2 className="font-serif text-2xl font-bold text-[#6B4A34] mt-8 mb-4">3. Code of Conduct</h2>
             <p>Players and attendees are expected to conduct themselves with the highest degree of sportsmanship. We strictly enforce FIDE regulations during ranked events. Cheating, harassment, or disruptive behavior will result in immediate disqualification and removal from the venue without a refund.</p>
             
-            <h2 className="font-serif text-2xl font-bold text-[#6B4A34] mt-8 mb-4">4. Privacy Policy</h2>
-            <p>We respect your privacy. The information collected during registration (name, age, contact details) is used strictly for tournament pairing, administrative purposes, and to contact you regarding the event. We do not sell or share your data with unauthorized third parties.</p>
+            <h2 className="font-serif text-2xl font-bold text-[#6B4A34] mt-8 mb-4">4. Limitation of Liability</h2>
+            <p>Jumuiya Chess Initiative shall not be liable for any indirect, incidental, special, or consequential damages resulting from the use or inability to use our services or products.</p>
             
-            <h2 className="font-serif text-2xl font-bold text-[#6B4A34] mt-8 mb-4">5. Media Release</h2>
-            <p>By attending a Jumuiya Chess event, you grant us the right to take photographs and video recordings. You agree that we may use such media for promotional and documentation purposes on our website and social media channels.</p>
+            <h2 className="font-serif text-2xl font-bold text-[#6B4A34] mt-8 mb-4">5. Governing Law</h2>
+            <p>These Terms of Service are governed by the laws of Kenya. Any disputes arising in connection with these terms shall be subject to the exclusive jurisdiction of the courts of Kenya.</p>
           </div>
         </div>
       </div>

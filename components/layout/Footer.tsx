@@ -32,6 +32,11 @@ export default function Footer() {
 
         {/* Right Side: Links & Administration Access */}
         <div className="flex flex-col items-center md:items-end space-y-4">
+          <div className="flex space-x-6 text-xs text-stone/80 text-center md:text-right font-sans mb-2">
+            <Link href="/terms" className="hover:text-white transition-colors">Terms</Link>
+            <Link href="/privacy" className="hover:text-white transition-colors">Privacy</Link>
+            <Link href="/cookies" className="hover:text-white transition-colors">Cookies</Link>
+          </div>
           <div className="flex space-x-6 text-xs text-stone/80 text-center md:text-right">
             <span className="font-sans">
               © {new Date().getFullYear()} Jumuiya Chess powered by The Gift of Chess Africa, Kenyan Chapter. All rights reserved.
