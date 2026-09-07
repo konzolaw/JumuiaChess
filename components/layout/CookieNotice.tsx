@@ -74,16 +74,9 @@ export function CookieNotice() {
             <div className="flex flex-col sm:flex-row items-center gap-3 w-full lg:w-auto">
               <button 
                 onClick={() => setShowModal(true)}
-                className="w-full sm:w-auto px-5 py-2.5 rounded-lg border border-transparent text-[#232320] font-sans text-sm font-bold hover:bg-[#FAF7F2] transition-colors flex items-center justify-center space-x-2"
-              >
-                <Settings2 className="w-4 h-4" />
-                <span>Manage</span>
-              </button>
-              <button 
-                onClick={handleRejectAll}
                 className="w-full sm:w-auto px-5 py-2.5 rounded-lg border border-[#6B4A34]/20 text-[#232320] font-sans text-sm font-bold hover:bg-[#FAF7F2] transition-colors whitespace-nowrap"
               >
-                Reject All
+                Reject
               </button>
               <button 
                 onClick={handleAcceptAll}
