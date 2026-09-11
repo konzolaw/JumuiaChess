@@ -22,7 +22,7 @@ export default function RegisterTournamentPage({ params }: { params: Promise<{ i
   const [dob, setDob] = useState('');
   const [school, setSchool] = useState('');
   const [category, setCategory] = useState('');
-  const [fideId, setFideId] = useState('00');
+  const [fideId, setFideId] = useState('');
   const [email, setEmail] = useState('');
   const [phoneNumber, setPhoneNumber] = useState('');
   const [accompanyingPerson, setAccompanyingPerson] = useState('');
@@ -138,7 +138,7 @@ export default function RegisterTournamentPage({ params }: { params: Promise<{ i
       dob,
       school,
       category,
-      fideId: fideId || '00',
+      fideId,
       phoneNumber,
       accompanyingPerson,
       consentGiven,
@@ -335,8 +335,8 @@ export default function RegisterTournamentPage({ params }: { params: Promise<{ i
                       <input type="date" value={dob} onChange={(e) => setDob(e.target.value)} className="w-full bg-[#FAF7F2] border border-stone-200 py-1.5 px-3 rounded-lg text-xs text-[#232320] focus:outline-none focus:border-[#6B4A34]" />
                     </div>
                     <div>
-                      <label className="block font-sans text-[10px] font-semibold text-stone-500 mb-1 uppercase">FIDE ID</label>
-                      <input type="text" value={fideId} onChange={(e) => setFideId(e.target.value)} placeholder="00" className="w-full bg-[#FAF7F2] border border-stone-200 py-1.5 px-3 rounded-lg text-xs text-[#232320] focus:outline-none focus:border-[#6B4A34]" />
+                      <label className="block font-sans text-[10px] font-semibold text-stone-500 mb-1 uppercase">FIDE ID * (Input 00 if you don't have one)</label>
+                      <input type="text" required value={fideId} onChange={(e) => setFideId(e.target.value)} placeholder="00" className="w-full bg-[#FAF7F2] border border-stone-200 py-1.5 px-3 rounded-lg text-xs text-[#232320] focus:outline-none focus:border-[#6B4A34]" />
                     </div>
                   </div>
                 </div>
