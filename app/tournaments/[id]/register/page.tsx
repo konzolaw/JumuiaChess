@@ -153,7 +153,7 @@ export default function RegisterTournamentPage({ params }: { params: Promise<{ i
     setFormSubmitting(false);
 
     if (res.success) {
-      if (isPwdDap) {
+      if (currentFee === 0) {
         setStatusMessage({
           type: 'success',
           text: 'Registration successful! Redirecting to your ticket...',
@@ -188,7 +188,7 @@ export default function RegisterTournamentPage({ params }: { params: Promise<{ i
   if (!tournament) return null;
 
   const isPwdDap = category.toLowerCase().includes('pwd') || category.toLowerCase().includes('dap');
-  const currentFee = isPwdDap ? 0 : tournament.entry_fee;
+  const currentFee = isPwdDap ? 0 : (Number(tournament.entry_fee) || 0);
   
   const capacity = tournament.max_participants || 100;
   const registered = tournament.registrations_count || 0;
@@ -212,7 +212,7 @@ export default function RegisterTournamentPage({ params }: { params: Promise<{ i
             <div className="text-right">
               <span className="font-sans text-[10px] text-stone-500 uppercase tracking-widest block">Entry Fee</span>
               <span className="font-serif text-xl font-bold text-[#6B4A34]">
-                {isPwdDap ? 'FREE' : `KES ${currentFee.toLocaleString()}`}
+                {currentFee === 0 ? 'FREE' : `KES ${currentFee.toLocaleString()}`}
               </span>
             </div>
           </div>
@@ -394,7 +394,7 @@ export default function RegisterTournamentPage({ params }: { params: Promise<{ i
                     disabled={formSubmitting}
                     className="w-full py-3 bg-[#232320] text-white font-sans text-xs md:text-sm font-bold rounded-xl shadow-md hover:bg-[#6B4A34] active:scale-[0.99] transition-all duration-300 flex items-center justify-center space-x-2"
                   >
-                    <span>{isPwdDap ? 'Complete Free Registration' : `Pay KES ${currentFee.toLocaleString()} via M-Pesa`}</span>
+                    <span>{currentFee === 0 ? 'Complete Free Registration' : `Pay KES ${currentFee.toLocaleString()} via M-Pesa`}</span>
                   </button>
                 </div>
               </form>
