@@ -88,9 +88,11 @@ export default function AdminBlog() {
       finalImageUrl = uploadRes.url;
     }
 
+    const finalSlug = slug.trim() || title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)+/g, '');
+
     const bodyData = {
       title,
-      slug,
+      slug: finalSlug,
       featured_image_url: finalImageUrl || undefined,
       excerpt,
       body,
@@ -255,10 +257,9 @@ export default function AdminBlog() {
           </div>
 
           <div>
-            <label className="block text-xs font-semibold text-stone-700 mb-1">Slug URL *</label>
+            <label className="block text-xs font-semibold text-stone-700 mb-1">Slug URL</label>
             <input
               type="text"
-              required
               value={slug}
               onChange={(e) => setSlug(e.target.value)}
               placeholder="tournament-success-in-kibera"
