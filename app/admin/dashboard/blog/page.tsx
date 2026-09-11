@@ -286,7 +286,7 @@ export default function AdminBlog() {
           </div>
 
           <div>
-            <label className="block text-xs font-semibold text-stone-700 mb-1">Body Content *</label>
+            <label className="block text-xs font-semibold text-stone-700 mb-1">Body Content * <span className="font-normal text-stone-500 ml-1">(Supports Markdown)</span></label>
             <textarea
               required
               rows={6}
