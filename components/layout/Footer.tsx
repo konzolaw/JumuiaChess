@@ -26,7 +26,7 @@ export default function Footer() {
             </span>
           </div>
           <p className="font-sans text-xs text-stone/70 max-w-md">
-            Jumuiya Chess powered by The Gift of Chess Africa, Kenyan Chapter. Using chess as a tool to expand opportunities, enhance cognitive development, and build community worldwide.
+            Jumuiya Chess powered by The Gift of Chess , Kenyan Chapter. Using chess as a tool to expand opportunities, enhance cognitive development, and build community worldwide.
           </p>
         </div>
 
@@ -39,10 +39,10 @@ export default function Footer() {
           </div>
           <div className="flex space-x-6 text-xs text-stone/80 text-center md:text-right">
             <span className="font-sans">
-              © {new Date().getFullYear()} Jumuiya Chess powered by The Gift of Chess Africa, Kenyan Chapter. All rights reserved.
+              © {new Date().getFullYear()} Jumuiya Chess powered by The Gift of Chess, Kenyan Chapter. All rights reserved.
             </span>
           </div>
-          
+
           {!loading && (
             <div className="flex space-x-4">
               {settings.instagram_url && (

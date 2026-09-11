@@ -2,26 +2,25 @@
 
 import { useState, useEffect } from 'react';
 import { apiRequest, uploadFile } from '@/lib/api';
-import { Tournament } from '@/types';
+import { Tournament, SiteSettings } from '@/types';
 import { Loader2, Plus, Trash2, Edit2, Trophy, Sparkles } from 'lucide-react';
 import { ImageUploadInput } from '@/components/admin/ImageUploadInput';
 import { Modal } from '@/components/admin/Modal';
 
-const GRAND_PRIX_CATEGORIES = [
-  'Open Section (FIDE Rated)',
-  'Ladies / Women Section',
-  'Junior Under 18 (U18)',
-  'Junior Under 16 (U16)',
-  'Junior Under 14 (U14)',
-  'Junior Under 12 (U12)',
-  'Junior Under 10 (U10)',
-  'Junior Under 8 (U8)',
-  'PWD / DAP Section (FREE Entrance)',
-];
-
 export default function AdminTournaments() {
   const [tournaments, setTournaments] = useState<Tournament[]>([]);
   const [loading, setLoading] = useState(true);
+  const [presetCategories, setPresetCategories] = useState<string[]>([
+    'Open Section (FIDE Rated)',
+    'Ladies / Women Section',
+    'Junior Under 18 (U18)',
+    'Junior Under 16 (U16)',
+    'Junior Under 14 (U14)',
+    'Junior Under 12 (U12)',
+    'Junior Under 10 (U10)',
+    'Junior Under 8 (U8)',
+    'PWD / DAP Section (FREE Entrance)',
+  ]);
 
   // Form State
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -50,12 +49,20 @@ export default function AdminTournaments() {
 
   const loadTournaments = async () => {
     setLoading(true);
-    const res = await apiRequest<Tournament[]>('/tournaments');
+    const [res, settingsRes] = await Promise.all([
+      apiRequest<Tournament[]>('/tournaments'),
+      apiRequest<SiteSettings>('/settings')
+    ]);
     if (res.success && Array.isArray(res.data)) {
       setTournaments(res.data);
     } else {
       setTournaments([]);
     }
+    
+    if (settingsRes.success && settingsRes.data?.tournament_preset_categories) {
+      setPresetCategories(settingsRes.data.tournament_preset_categories);
+    }
+    
     setLoading(false);
   };
 
@@ -374,7 +381,7 @@ export default function AdminTournaments() {
             {/* Quick Add Suggestions */}
             <div className="text-[10px] font-bold text-stone-500 uppercase mb-2">Quick Add Presets:</div>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
-              {GRAND_PRIX_CATEGORIES.map((cat) => {
+              {presetCategories.length > 0 ? presetCategories.map((cat) => {
                 const isSelected = categories.includes(cat);
                 return (
                   <label key={cat} className={`flex items-center space-x-2 text-xs cursor-pointer p-2 rounded-lg border transition-colors ${isSelected ? 'bg-[#6B4A34]/10 border-[#6B4A34]/30' : 'bg-stone-50 border-stone-200 hover:bg-stone-100'}`}>
@@ -390,7 +397,11 @@ export default function AdminTournaments() {
                     <span className={isSelected ? 'text-[#6B4A34] font-bold' : 'text-stone-700'}>{cat}</span>
                   </label>
                 );
-              })}
+              }) : (
+                <div className="col-span-1 sm:col-span-2 text-xs text-stone-500 italic p-2">
+                  No preset categories available. You can add them in the Site Settings.
+                </div>
+              )}
             </div>
           </div>
 

@@ -17,6 +17,8 @@ export default function AdminSettings() {
   const [facebook, setFacebook] = useState('');
   const [youtube, setYoutube] = useState('');
   const [shopEnabled, setShopEnabled] = useState(true);
+  const [presetCategories, setPresetCategories] = useState<string[]>([]);
+  const [newPresetCategory, setNewPresetCategory] = useState('');
 
   // Our Story CMS State
   const [ourStoryTitle, setOurStoryTitle] = useState('Our Story');
@@ -38,6 +40,7 @@ export default function AdminSettings() {
         if (res.data.our_story_heading) setOurStoryHeading(res.data.our_story_heading);
         if (res.data.our_story_paragraph_1) setOurStoryParagraph1(res.data.our_story_paragraph_1);
         if (res.data.our_story_paragraph_2) setOurStoryParagraph2(res.data.our_story_paragraph_2);
+        if (res.data.tournament_preset_categories) setPresetCategories(res.data.tournament_preset_categories);
       } else {
         setEmail('info@jumuiyachess.org');
         setPhone('+254700000000');
@@ -45,6 +48,17 @@ export default function AdminSettings() {
         setFacebook('https://facebook.com/giftofchess');
         setYoutube('https://youtube.com/giftofchess');
         setShopEnabled(true);
+        setPresetCategories([
+          'Open Section (FIDE Rated)',
+          'Ladies / Women Section',
+          'Junior Under 18 (U18)',
+          'Junior Under 16 (U16)',
+          'Junior Under 14 (U14)',
+          'Junior Under 12 (U12)',
+          'Junior Under 10 (U10)',
+          'Junior Under 8 (U8)',
+          'PWD / DAP Section (FREE Entrance)',
+        ]);
       }
       setLoading(false);
     }
@@ -67,6 +81,7 @@ export default function AdminSettings() {
       our_story_heading: ourStoryHeading,
       our_story_paragraph_1: ourStoryParagraph1,
       our_story_paragraph_2: ourStoryParagraph2,
+      tournament_preset_categories: presetCategories,
     };
 
     const res = await apiRequest('/settings', {
@@ -238,6 +253,63 @@ export default function AdminSettings() {
                 />
               </div>
             </div>
+          </div>
+
+          {/* Section: Tournament Preset Categories */}
+          <div className="space-y-4 pt-2">
+            <h3 className="font-serif font-bold text-charcoal border-b border-stone-100 pb-2 text-xs uppercase tracking-wider text-[#6B4A34]">
+              Tournament Preset Categories
+            </h3>
+            
+            <div className="flex gap-2 mb-3">
+              <input
+                type="text"
+                value={newPresetCategory}
+                onChange={(e) => setNewPresetCategory(e.target.value)}
+                placeholder="e.g. Corporate Teams"
+                className="flex-1 bg-white border border-stone-300 p-2.5 rounded-xl text-xs text-charcoal focus:outline-none focus:ring-2 focus:ring-[#6B4A34]"
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter') {
+                    e.preventDefault();
+                    if (newPresetCategory.trim() && !presetCategories.includes(newPresetCategory.trim())) {
+                      setPresetCategories([...presetCategories, newPresetCategory.trim()]);
+                    }
+                    setNewPresetCategory('');
+                  }
+                }}
+              />
+              <button
+                type="button"
+                onClick={() => {
+                  if (newPresetCategory.trim() && !presetCategories.includes(newPresetCategory.trim())) {
+                    setPresetCategories([...presetCategories, newPresetCategory.trim()]);
+                  }
+                  setNewPresetCategory('');
+                }}
+                className="px-4 py-2.5 bg-[#6B4A34] text-white text-xs font-bold rounded-xl hover:bg-[#573b29] transition-colors"
+              >
+                Add Preset
+              </button>
+            </div>
+
+            {presetCategories.length > 0 ? (
+              <div className="flex flex-wrap gap-2 p-4 bg-[#FAF7F2] rounded-xl border border-stone-200">
+                {presetCategories.map(cat => (
+                  <span key={cat} className="inline-flex items-center gap-1 bg-white border border-[#6B4A34]/20 px-3 py-1.5 rounded-full text-xs font-bold text-[#6B4A34] shadow-sm">
+                    {cat}
+                    <button 
+                      type="button" 
+                      onClick={() => setPresetCategories(presetCategories.filter(c => c !== cat))} 
+                      className="text-red-400 hover:text-red-600 font-bold ml-1 text-sm leading-none"
+                    >
+                      &times;
+                    </button>
+                  </span>
+                ))}
+              </div>
+            ) : (
+              <p className="text-xs text-stone-500 italic">No preset categories found. Add some above to use them when creating tournaments.</p>
+            )}
           </div>
 
           {/* Section: Toggle Shop */}

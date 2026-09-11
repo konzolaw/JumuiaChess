@@ -27,7 +27,7 @@ export default function Hero() {
         {/* Child 1: Subtitle & Title */}
         <div className="space-y-4 flex flex-col justify-center items-start text-left z-10 lg:max-w-[480px] w-full lg:col-start-1 lg:col-end-2 lg:row-start-1 lg:row-end-2">
           <span className="font-serif italic text-xs md:text-sm font-medium tracking-wide text-charcoal/70 whitespace-nowrap">
-            Powered by The Gift of Chess Africa &bull; Kenyan Chapter
+            Powered by The Gift of Chess&bull; Kenyan Chapter
           </span>
 
           <h1 className="font-serif text-5xl md:text-6xl lg:text-[4.5rem] xl:text-[5.5rem] font-bold tracking-tight text-charcoal leading-[0.98]">

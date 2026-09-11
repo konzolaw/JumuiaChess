@@ -33,7 +33,8 @@ export async function PUT(request: NextRequest) {
       our_story_title,
       our_story_heading,
       our_story_paragraph_1,
-      our_story_paragraph_2
+      our_story_paragraph_2,
+      tournament_preset_categories
     } = body;
     
     // Upsert since there's exactly one settings row (id = 1)
@@ -52,6 +53,7 @@ export async function PUT(request: NextRequest) {
         our_story_heading,
         our_story_paragraph_1,
         our_story_paragraph_2,
+        tournament_preset_categories,
         updated_at: new Date().toISOString()
       }])
       .select()

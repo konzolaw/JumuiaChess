@@ -124,6 +124,7 @@ export interface SiteSettings {
   our_story_heading?: string;
   our_story_paragraph_1?: string;
   our_story_paragraph_2?: string;
+  tournament_preset_categories?: string[];
   updated_at?: string;
 }
 
