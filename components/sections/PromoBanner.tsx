@@ -7,7 +7,7 @@ export default function PromoBanner() {
   const [modalOpen, setModalOpen] = useState(false);
 
   return (
-    <section className="relative w-full bg-white py-16 md:py-20 overflow-hidden">
+    <section id="donate" className="relative w-full bg-white py-16 md:py-20 overflow-hidden">
       <div
         className="relative w-full h-[380px] md:h-[440px] flex items-center justify-center z-10"
         style={{ clipPath: 'polygon(0 12%, 100% 0, 100% 88%, 0 100%)' }}
