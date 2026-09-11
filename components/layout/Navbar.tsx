@@ -16,6 +16,7 @@ const NAV_LINKS = [
   { name: 'Shop', href: '#shop' },
   { name: 'Blogs & News', href: '#news' },
   { name: 'Partners', href: '#partners' },
+  { name: 'Donate', href: '#donate' },
   { name: 'Contact Us', href: '#contact' },
 ];
 
@@ -51,7 +52,7 @@ export default function Navbar() {
       }
     );
 
-    const sectionIds = ['home', 'our-story', 'team', 'impact', 'gallery', 'tournaments', 'shop', 'news', 'partners', 'contact'];
+    const sectionIds = ['home', 'our-story', 'team', 'impact', 'gallery', 'tournaments', 'shop', 'news', 'partners', 'donate', 'contact'];
 
     sectionIds.forEach((id) => {
       const element = document.getElementById(id);
