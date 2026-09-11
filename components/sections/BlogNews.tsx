@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import Image from 'next/image';
+import Link from 'next/link';
 import { BlogPost, Video } from '@/types';
 import { ArrowLeft, ArrowRight, Calendar, ExternalLink, Loader2 } from 'lucide-react';
 
@@ -12,7 +13,7 @@ const DEFAULT_SOURCE_URLS: Record<string, string> = {
 };
 
 export default function BlogNews({ posts = [], videos = [] }: { posts?: BlogPost[], videos?: Video[] }) {
-  const [readingPost, setReadingPost] = useState<BlogPost | null>(null);
+
 
   const featuredVideo = videos.find(v => v.is_featured) || videos[0];
   const supportingVideos = videos.filter(v => v.id !== featuredVideo?.id).slice(0, 2);
@@ -143,9 +144,9 @@ export default function BlogNews({ posts = [], videos = [] }: { posts?: BlogPost
                 <div className="space-y-6">
                   <div className="space-y-4">
                     {posts.slice(0, 3).map((post) => (
-                      <div
+                      <Link
                         key={post.id}
-                        onClick={() => setReadingPost(post)}
+                        href={`/news/${post.slug}`}
                         className="group bg-white rounded-2xl p-4 sm:p-5 shadow-md shadow-stone-900/5 hover:shadow-xl hover:-translate-y-0.5 transition-all duration-300 cursor-pointer flex flex-col sm:flex-row gap-4 items-start border border-stone-100"
                       >
                         {/* Image Thumbnail */}
@@ -189,7 +190,7 @@ export default function BlogNews({ posts = [], videos = [] }: { posts?: BlogPost
                             <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform duration-300" />
                           </div>
                         </div>
-                      </div>
+                      </Link>
                     ))}
                   </div>
                 </div>
@@ -198,84 +199,6 @@ export default function BlogNews({ posts = [], videos = [] }: { posts?: BlogPost
           </div>
         </div>
 
-      {/* FLOATING MAGAZINE ARTICLE READER MODAL */}
-      {readingPost && (
-        <div
-          onClick={() => setReadingPost(null)}
-          className="fixed inset-0 z-50 bg-stone-950/75 backdrop-blur-sm flex items-center justify-center p-4 sm:p-6 animate-fade-in"
-        >
-          <div
-            onClick={(e) => e.stopPropagation()}
-            className="max-w-2xl w-full bg-[#FAF8F5] rounded-3xl overflow-hidden shadow-2xl max-h-[88vh] flex flex-col relative z-50 animate-scale-in border border-stone-200/60"
-          >
-            {/* Scrollable Magazine Editorial Body */}
-            <div className="p-6 sm:p-8 overflow-y-auto space-y-6 flex-1">
-              {/* Magazine Editorial Title & Date Header */}
-              <div className="space-y-2 border-b border-stone-200/80 pb-4">
-                <span className="font-serif italic text-xs text-[#6B4A34] font-medium tracking-wide">
-                  Field Report • {readingPost.published_at
-                    ? new Date(readingPost.published_at).toLocaleDateString(undefined, {
-                        month: 'long',
-                        day: 'numeric',
-                        year: 'numeric',
-                      })
-                    : 'Recent'}
-                </span>
-                <h2 className="font-serif text-2xl sm:text-3xl font-bold text-[#2A2421] leading-snug tracking-tight">
-                  {readingPost.title}
-                </h2>
-              </div>
-
-              {/* Cover Photo */}
-              {readingPost.featured_image_url && (
-                <div className="relative aspect-[16/9] w-full rounded-2xl overflow-hidden bg-stone-200 shadow-md">
-                  <Image
-                    src={readingPost.featured_image_url}
-                    alt={readingPost.title}
-                    fill
-                    priority
-                    sizes="(max-width: 800px) 100vw, 700px"
-                    className="object-cover"
-                  />
-                </div>
-              )}
-
-              {/* Editorial Lead Excerpt */}
-              <blockquote className="font-serif italic text-sm sm:text-base text-stone-800 border-l-2 border-[#6B4A34] pl-4 py-1 leading-relaxed bg-white/60 p-4 rounded-r-xl">
-                {readingPost.excerpt}
-              </blockquote>
-
-              {/* Article Content */}
-              <div className="font-sans text-stone-700 text-sm sm:text-base leading-relaxed whitespace-pre-wrap space-y-4 pt-1">
-                {readingPost.body}
-              </div>
-            </div>
-
-            {/* Bottom Action Bar: ONLY TWO BUTTONS (Back & Visit Site) */}
-            <div className="p-4 sm:p-5 bg-white border-t border-stone-200/80 flex items-center justify-between gap-4 shrink-0">
-              {/* Button 1: Go Back */}
-              <button
-                onClick={() => setReadingPost(null)}
-                className="px-5 py-2.5 rounded-xl bg-stone-100 hover:bg-stone-200 text-[#2A2421] text-xs font-bold font-sans transition-colors flex items-center gap-1.5"
-              >
-                <ArrowLeft className="w-4 h-4" />
-                <span>Back</span>
-              </button>
-
-              {/* Button 2: Visit Site */}
-              <a
-                href={getSourceUrl(readingPost)}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="px-5 py-2.5 rounded-xl bg-[#6B4A34] hover:bg-[#523826] text-white text-xs font-bold font-sans transition-colors shadow-sm flex items-center gap-1.5"
-              >
-                <span>Visit Site</span>
-                <ExternalLink className="w-3.5 h-3.5" />
-              </a>
-            </div>
-          </div>
-        </div>
-      )}
     </section>
   );
 }
