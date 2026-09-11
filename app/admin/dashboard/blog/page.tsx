@@ -20,6 +20,7 @@ export default function AdminBlog() {
   const [excerpt, setExcerpt] = useState('');
   const [body, setBody] = useState('');
   const [published, setPublished] = useState(true);
+  const [sourceUrl, setSourceUrl] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [message, setMessage] = useState<{ type: 'success' | 'error'; text: string } | null>(null);
 
@@ -56,6 +57,7 @@ export default function AdminBlog() {
     setExcerpt('');
     setBody('');
     setPublished(true);
+    setSourceUrl('');
     setMessage(null);
     setIsModalOpen(true);
   };
@@ -68,6 +70,7 @@ export default function AdminBlog() {
     setExcerpt(post.excerpt);
     setBody(post.body);
     setPublished(post.published);
+    setSourceUrl(post.source_url || '');
     setMessage(null);
     setIsModalOpen(true);
   };
@@ -88,7 +91,8 @@ export default function AdminBlog() {
       finalImageUrl = uploadRes.url;
     }
 
-    const finalSlug = slug.trim() || title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)+/g, '');
+    const rawSlug = slug.trim() || title;
+    const finalSlug = rawSlug.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)+/g, '');
 
     const bodyData = {
       title,
@@ -97,6 +101,7 @@ export default function AdminBlog() {
       excerpt,
       body,
       published,
+      source_url: sourceUrl.trim() || undefined,
     };
 
     let res;
@@ -263,6 +268,17 @@ export default function AdminBlog() {
               value={slug}
               onChange={(e) => setSlug(e.target.value)}
               placeholder="tournament-success-in-kibera"
+              className="w-full bg-white border border-stone-300 p-2.5 rounded-xl text-xs text-charcoal focus:outline-none focus:ring-2 focus:ring-[#6B4A34]"
+            />
+          </div>
+
+          <div>
+            <label className="block text-xs font-semibold text-stone-700 mb-1">Original Source URL (Optional)</label>
+            <input
+              type="url"
+              value={sourceUrl}
+              onChange={(e) => setSourceUrl(e.target.value)}
+              placeholder="https://x.com/thegiftofchess/..."
               className="w-full bg-white border border-stone-300 p-2.5 rounded-xl text-xs text-charcoal focus:outline-none focus:ring-2 focus:ring-[#6B4A34]"
             />
           </div>

@@ -5,7 +5,7 @@ export async function PUT(request: NextRequest, { params }: { params: Promise<{ 
   try {
     const id = (await params).id;
     const body = await request.json();
-    const { title, slug, featured_image_url, excerpt, body: postBody, published } = body;
+    const { title, slug, featured_image_url, excerpt, body: postBody, published, source_url } = body;
     
     const updateData: any = { 
       title, 
@@ -13,7 +13,8 @@ export async function PUT(request: NextRequest, { params }: { params: Promise<{ 
       featured_image_url, 
       excerpt, 
       body: postBody, 
-      published 
+      published,
+      source_url
     };
 
     if (published) {

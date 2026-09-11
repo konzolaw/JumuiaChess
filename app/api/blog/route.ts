@@ -14,7 +14,7 @@ export async function GET(request: NextRequest) {
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
-    const { title, slug, featured_image_url, excerpt, body: postBody, published } = body;
+    const { title, slug, featured_image_url, excerpt, body: postBody, published, source_url } = body;
     
     const insertData: any = { 
       title, 
@@ -22,7 +22,8 @@ export async function POST(request: NextRequest) {
       featured_image_url, 
       excerpt, 
       body: postBody, 
-      published 
+      published,
+      source_url
     };
     
     if (published) {
